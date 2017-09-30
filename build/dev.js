@@ -6,12 +6,11 @@ var config = require('./config');
 var webpackConfig = require('./webpack.dev.config');
 
 var port = process.env.PORT || config.dev.port;
-var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 
 var server = express();
 var compiler = webpack(webpackConfig);
 
-server.use(staticPath, express.static('./static'));
+server.use('/static', express.static(path.resolve(__dirname, '../static')));
 server.use(require('connect-history-api-fallback')());
 server.use(require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
