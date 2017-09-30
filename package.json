@@ -2,7 +2,10 @@
   "name": "scaffold-vue-webpack",
   "version": "0.0.1",
   "description": "A scaffold built by vue and webpack",
-  "scripts": {},
+  "scripts": {
+    "start": "cross-env NODE_ENV=development node build/dev.js",
+    "build": "cross-env NODE_ENV=production node build/prod.js"
+  },
   "keywords": [
     "webpack",
     "vue",
@@ -12,8 +15,29 @@
   "author": "yuanzhaohao",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^7.1.4",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "connect-history-api-fallback": "^1.3.0",
     "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "eslint-loader": "^1.9.0",
     "express": "^4.16.0",
-    "webpack": "^3.6.0"
+    "extract-text-webpack-plugin": "^3.0.0",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "json-loader": "^0.5.7",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5",
+    "postcss-loader": "^2.0.6",
+    "url-loader": "^0.5.9",
+    "vue": "^2.4.4",
+    "vue-loader": "^13.0.5",
+    "vue-style-loader": "^3.0.3",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1",
+    "webpack-merge": "^4.1.0"
   }
 }

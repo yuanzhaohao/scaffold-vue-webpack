@@ -5,6 +5,14 @@ module.exports = {
     env: {
       NODE_ENV: '"development"'
     },
-    port: 8787
+    port: 8777,
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '',
+    cssSourceMap: false,
+  },
+
+  build: {
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    productionSourceMap: false,
   }
 };
