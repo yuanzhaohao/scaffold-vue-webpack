@@ -1,5 +1,6 @@
 process.env.NODE_ENV = 'production'
 
+var fs = require('fs-extra');
 var ora = require('ora');
 var rm = require('rimraf');
 var path = require('path');
@@ -10,6 +11,7 @@ var webpackConfig = require('./webpack.prod.config');
 
 var spinner = ora('building for production...');
 spinner.start();
+fs.emptyDirSync(config.build.assetsRoot);
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) {

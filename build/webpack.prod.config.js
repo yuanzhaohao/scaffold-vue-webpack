@@ -11,18 +11,21 @@ var webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
-    filename: 'js/[name].[chunkhash].js',
-    chunkFilename: 'js/[id].[chunkhash].js'
+    filename: 'js/[name].[chunkhash:7].js',
+    chunkFilename: 'js/[id].[chunkhash:7].js'
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
       compress: {
-        warnings: false
-      },
-      sourceMap: true
+        warnings: false,
+        collapse_vars: true,
+        reduce_vars: true
+      }
     }),
     new ExtractTextPlugin({
-      filename: 'css/[name].[contenthash].css'
+      filename: 'css/[name].[contenthash:7].css'
     }),
     new OptimizeCSSPlugin({
       cssProcessorOptions: {
@@ -31,20 +34,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: function (module, count) {
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
-          ) === 0
-        )
-      }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
-      chunks: ['vendor']
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
@@ -79,7 +69,5 @@ if (config.build.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 }
-
-console.log(webpackConfig);
 
 module.exports = webpackConfig;
