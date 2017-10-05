@@ -14,5 +14,8 @@ module.exports = {
   build: {
     assetsRoot: path.resolve(__dirname, '../dist'),
     productionSourceMap: false,
+    productionGzip: true,
+    productionGzipExtensions: ['js', 'css'],
+    bundleAnalyzerReport: process.env.npm_config_report
   }
 };

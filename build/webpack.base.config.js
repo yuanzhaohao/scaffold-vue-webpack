@@ -5,6 +5,7 @@ var utils = require('./utils');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var projectRoot = path.resolve(__dirname, '../');
 var env = process.env.NODE_ENV;
+var isProduction = env === 'production';
 var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap);
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap);
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd;
@@ -111,7 +112,14 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './src/index.html'
+      template: './src/index.html',
+      inject: isProduction,
+      minify: isProduction ? {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      } : null,
+      chunksSortMode: 'dependency'
     })
   ]
 };
