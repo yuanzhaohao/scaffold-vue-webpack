@@ -1,14 +1,6 @@
 var config = require('./config');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// var basicLoaders = ['css-loader', 'postcss-loader'];
-// var loadersMap = {
-//   css: basicLoaders,
-//   less: basicLoaders.push('less-loader'),
-//   sass: basicLoaders.push('sass-loader?indentedSyntax=true'),
-//   scss: basicLoaders.push('sass-loader')
-// };
-
 function cssLoaders(options) {
   options = options || {};
   function generateLoaders(loaders) {
