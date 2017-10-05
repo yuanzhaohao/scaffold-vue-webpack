@@ -8,7 +8,7 @@ module.exports = {
     port: 8777,
     assetsSubDirectory: 'static',
     assetsPublicPath: '',
-    cssSourceMap: false,
+    cssSourceMap: true,
   },
 
   build: {

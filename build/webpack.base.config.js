@@ -9,6 +9,13 @@ var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap);
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap);
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd;
 
+console.log(utils.cssLoaders({
+  sourceMap: env === 'production'
+    ? config.build.productionSourceMap
+    : config.dev.cssSourceMap,
+  extract: env === 'production'
+}));
+
 module.exports = {
   entry: {
     index: './src/index.js'
