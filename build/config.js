@@ -13,6 +13,7 @@ module.exports = {
 
   build: {
     assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: 'static',
     productionSourceMap: false,
     productionGzip: true,
     productionGzipExtensions: ['js', 'css'],

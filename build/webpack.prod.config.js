@@ -1,7 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
 var merge = require('webpack-merge');
+var config = require('./config');
 var baseWebpackConfig = require('./webpack.base.config');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -20,7 +22,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       sourceMap: true
     }),
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css')
+      filename: 'css/[name].[contenthash].css'
     }),
     new OptimizeCSSPlugin({
       cssProcessorOptions: {
@@ -31,7 +33,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module, count) {
-        // any required modules inside node_modules are extracted to vendor
         return (
           module.resource &&
           /\.js$/.test(module.resource) &&

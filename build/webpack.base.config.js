@@ -10,13 +10,6 @@ var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap);
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap);
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd;
 
-console.log(utils.cssLoaders({
-  sourceMap: env === 'production'
-    ? config.build.productionSourceMap
-    : config.dev.cssSourceMap,
-  extract: env === 'production'
-}));
-
 module.exports = {
   entry: {
     index: './src/index.js'
@@ -114,11 +107,11 @@ module.exports = {
       filename: 'index.html',
       template: './src/index.html',
       inject: isProduction,
-      minify: isProduction ? {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-      } : null,
+      // minify: isProduction ? {
+      //   removeComments: true,
+      //   collapseWhitespace: true,
+      //   removeAttributeQuotes: true
+      // } : null,
       chunksSortMode: 'dependency'
     })
   ]
