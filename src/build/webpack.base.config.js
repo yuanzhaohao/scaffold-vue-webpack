@@ -10,11 +10,9 @@ var isProduction = env === 'production';
 var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap);
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap);
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd;
-var entryPath = './src/*.js';
-var templatePath = './src/';
 
 var vendorName = 'vendor';
-var entries = getEntries(entryPath);
+var entries = getEntries('./src/page/*.js');
 var chunks = Object.keys(entries);
 var webpackConfig = {
   entry: entries,
@@ -92,7 +90,7 @@ var webpackConfig = {
 chunks.forEach(function(chunk) {
   var config = {
     filename: chunk + '.html',
-    template: templatePath + chunk + '.html',
+    template: './src/' + chunk + '.html',
     inject: isProduction,
     chunksSortMode: 'dependency'
   };
