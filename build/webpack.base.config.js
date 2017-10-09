@@ -93,8 +93,12 @@ chunks.forEach(function(chunk) {
   var config = {
     filename: chunk + '.html',
     template: templatePath + chunk + '.html',
-    inject: isProduction,
-    chunksSortMode: 'dependency'
+    inject: 'body',
+    chunksSortMode: 'dependency',
+    minify: isProduction ? {
+      removeComments: true,
+      collapseWhitespace: false
+    } : null
   };
   if (chunk in entries) {
     config.chunks = [vendorName, chunk];

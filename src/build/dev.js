@@ -20,25 +20,6 @@ server.use(require('webpack-hot-middleware')(compiler, {
   log: false,
   heartbeat: 2000
 }));
-console.log(compiler.outputPath);
-// 路由
-// server.get('/*.html$/', function(req, res, next) {
-//   var page = req.params[0]
-//     ? req.params[0] + '.html'
-//     : 'index.html';
-//   var filepath = path.join(compiler.outputPath, page);
-//
-//   console.log(filepath);
-//   // 使用webpack提供的outputFileSystem
-//   compiler.outputFileSystem.readFile(filepath, function(err, result) {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.set('content-type', 'text/html');
-//     res.send(result);
-//     res.end();
-//   });
-// });
 
 server.listen(port, function(err) {
   if (err) {
