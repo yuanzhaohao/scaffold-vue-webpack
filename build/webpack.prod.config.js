@@ -33,9 +33,6 @@ var webpackConfig = merge(baseWebpackConfig, {
       }
     }),
     new webpack.HashedModuleIdsPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-    }),
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),

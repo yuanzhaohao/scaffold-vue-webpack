@@ -1,4 +1,5 @@
 var path = require('path');
+var glob = require('glob');
 var webpack = require('webpack');
 var config = require('./config');
 var utils = require('./utils');
@@ -10,10 +11,11 @@ var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap);
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap);
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd;
 
-module.exports = {
-  entry: {
-    index: './src/index.js'
-  },
+var vendorName = 'vendor';
+var entries = getEntries('./src/page/*.js');
+var chunks = Object.keys(entries);
+var webpackConfig = {
+  entry: entries,
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -30,21 +32,12 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.(js|vue)$/,
-      //   loader: 'eslint-loader',
-      //   enforce: 'pre',
-      //   include: [resolve('src'), resolve('test')],
-      //   options: {
-      //     formatter: require('eslint-friendly-formatter')
-      //   }
-      // },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           loaders: utils.cssLoaders({
-            sourceMap: env === 'production'
+            sourceMap: isProduction
               ? config.build.productionSourceMap
               : config.dev.cssSourceMap,
             extract: env === 'production'
@@ -68,7 +61,6 @@ module.exports = {
         options: {
           limit: 10000,
           name: 'img/[name].[hash:7].[ext]'
-          // name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
       {
@@ -77,7 +69,6 @@ module.exports = {
         options: {
           limit: 10000,
           name: 'fonts/[name].[hash:7].[ext]'
-          // name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
     ]
@@ -90,29 +81,38 @@ module.exports = {
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: function(module, count) {
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
-        )
-      }
+      name: vendorName,
+      minChunks: 3
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor']
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.html',
-      inject: isProduction,
-      // minify: isProduction ? {
-      //   removeComments: true,
-      //   collapseWhitespace: true,
-      //   removeAttributeQuotes: true
-      // } : null,
-      chunksSortMode: 'dependency'
-    })
   ]
 };
+
+chunks.forEach(function(chunk) {
+  var config = {
+    filename: chunk + '.html',
+    template: './src/' + chunk + '.html',
+    inject: isProduction,
+    chunksSortMode: 'dependency'
+  };
+  if (chunk in entries) {
+    config.chunks = [vendorName, chunk];
+  }
+  webpackConfig.plugins.push(new HtmlWebpackPlugin(config));
+});
+
+module.exports = webpackConfig;
+
+// 获取所有入口文件
+function getEntries(globPath) {
+   var files = glob.sync(globPath);
+   var entries = {};
+
+   files.forEach(function(filepath) {
+     var name = filepath.replace(/(.*\/)*([^.]+).*/ig, '$2');
+     if (name && !entries[name]) {
+       entries[name] = filepath;
+     }
+   });
+
+   return entries;
+}

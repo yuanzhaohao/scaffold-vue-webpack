@@ -11,7 +11,7 @@ var webpackConfig = require('./webpack.prod.config');
 var spinner = ora('building for production...');
 spinner.start();
 
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
+rm(path.join(config.build.assetsRoot), err => {
   if (err) {
     throw err;
   }
