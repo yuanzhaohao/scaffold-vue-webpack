@@ -1,6 +1,7 @@
 var path = require('path');
 var glob = require('glob');
 var webpack = require('webpack');
+var px2rem = require('postcss-px2rem');
 var config = require('./config');
 var utils = require('./utils');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -49,7 +50,10 @@ var webpackConfig = {
             source: 'src',
             img: 'src',
             image: 'xlink:href'
-          }
+          },
+          postcss: [
+            px2rem({remUnit: 75})
+          ]
         }
       },
       {
